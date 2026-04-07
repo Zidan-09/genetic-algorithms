@@ -1,10 +1,11 @@
-import { Fitness } from "../entities/fitness";
-import { Individual } from "../entities/individual";
-import { Counter } from "../entities/counter";
-import type { AgConfig, RunConfig } from "../utils/config";
-import type { Selection } from "../entities/selection";
-import type { Crossover } from "../entities/crossover";
-import type { Mutation } from "../entities/mutation";
+import { Fitness } from "./fitness/fitness";
+import { Individual } from "./individual/individual";
+import { Counter } from "../counter/counter";
+import type { AgConfig } from "./agConfig";
+import type { RunConfig } from "./runConfig";
+import { Selection } from "./methods/selection/selection";
+import { Crossover } from "./methods/crossover/crossover";
+import { Mutation } from "./methods/mutation/mutation";
 
 class GeneticAlgorithm {
     private readonly POP_SIZE: number;
@@ -60,9 +61,11 @@ class GeneticAlgorithm {
                 const p2 = this.selectionMethod.select(population);
 
                 let child = this.crossover(p1, p2);
-                this.mutate(child);
+                const mutationResult = this.mutateMethod.mutate(child, this.MUTATION_RATE, this.MIN, this.MAX);
 
-                newPopulation.push(child);
+                const newIndividual = new Individual(mutationResult, this.evaluate(mutationResult));
+
+                newPopulation.push(newIndividual);
             }
 
             population = newPopulation;
@@ -113,20 +116,6 @@ class GeneticAlgorithm {
         const childGenes = this.crossMethod.cross(p1, p2);
 
         return new Individual(childGenes, this.evaluate(childGenes));
-    }
-
-    private mutate(individual: Individual) {
-        const newGenes = individual.getGenes().map(gene => {
-            if (Math.random() < this.MUTATION_RATE) {
-                gene += Math.random() * 2 - 1;
-            }
-
-            return Math.max(this.MIN, Math.min(this.MAX, gene));
-        });
-        
-        individual.mutateGenes(newGenes);
-
-        individual.setFitness(this.evaluate(newGenes));
     }
 
     private evaluate(genes: number[]): number {

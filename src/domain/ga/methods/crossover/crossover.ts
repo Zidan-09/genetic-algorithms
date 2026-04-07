@@ -1,4 +1,4 @@
-import type { Individual } from "./individual";
+import type { Individual } from "../../individual/individual";
 
 export class Crossover {
     private readonly func: (p1: Individual, p2: Individual) => number[];

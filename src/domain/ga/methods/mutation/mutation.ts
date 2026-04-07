@@ -1,4 +1,4 @@
-import type { Individual } from "./individual";
+import type { Individual } from "../../individual/individual";
 
 export class Mutation {
     private readonly calc: (ind: Individual, rate: number, min?: number, max?: number) => number[];
