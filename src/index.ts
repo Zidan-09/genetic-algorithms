@@ -8,8 +8,10 @@ class Main {
         
         const command = problemsMap[tryProblem];
 
-        const output = GaUseCase.execute(command);
+        let output;
 
+        output = GaUseCase.execute(command);
+           
         console.log(`nfe: ${output.nfe} | sr: ${output.sr}`);
     }
 }

@@ -1,18 +1,18 @@
 import type { RunConfig } from "../../domain/ga/runConfig";
 import type { GeneralConfig } from "../../domain/ga/generalConfig";
 import type { GaCommand } from "./gaCommand";
-import { tournamentSelection } from "../../domain/ga/methods/selection/tournament";
 import type { AgConfig } from "../../domain/ga/agConfig";
 import { ackFitness } from "../../domain/ga/fitness/ack";
 import { blxAlphaCrossover } from "../../domain/ga/methods/crossover/blxAlpha";
-import { gaussianMutation } from "../../domain/ga/methods/mutation/gaussian";
+import { tournamentSelection } from "../../domain/ga/methods/selection/tournament";
+import { localMutation } from "../../domain/ga/methods/mutation/local";
 
 const runConfig: RunConfig = {
-    popSize: 200,
-    generations: 2000,
-    mutationRate: 0.1,
+    popSize: 45,
+    generations: 1000,
+    mutationRate: 0.01,
     crossover: blxAlphaCrossover,
-    mutation: gaussianMutation,
+    mutation: localMutation,
     selection: tournamentSelection
 }
 

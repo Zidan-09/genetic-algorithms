@@ -17,7 +17,7 @@ export const gaussianMutation = new Mutation((ind: Individual, rate: number, min
 
     const genes = ind.getGenes();
 
-    const sigma = 5;
+    const sigma = 3;
 
     return genes.map(gene => {
         if (Math.random() < rate) {

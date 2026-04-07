@@ -2,7 +2,7 @@ import type { Individual } from "../../individual/individual";
 import { Crossover } from "./crossover";
 
 export const blxAlphaCrossover = new Crossover((p1: Individual, p2: Individual) => {
-    const blxAlpha = 0.5;
+    const blxAlpha = 0.6;
     
     const g1 = p1.getGenes();
     const g2 = p2.getGenes();

@@ -45,15 +45,17 @@ class GeneticAlgorithm {
     }
 
     public execute(log: boolean): Individual {
+        let bestCount = 0;
+
         let population = this.createPopulation();
+        let bestIndividual = population[0];
 
         for (let gen = 0; gen < this.GENERATIONS; gen++) {
-
             const sorted = [...population].sort(
                 (a, b) => a.getFitness() - b.getFitness()
             );
 
-            const eliteCount = 1;
+            const eliteCount = 5;
             const newPopulation = sorted.slice(0, eliteCount);
 
             for (let i = eliteCount; i < this.POP_SIZE; i++) {
@@ -74,12 +76,17 @@ class GeneticAlgorithm {
 
             if (!best) throw new Error("Invalid Individual");
 
-            if (best.getFitness() <= this.TARGET) {
-                break;
+            if (best === bestIndividual) {
+                bestCount++;
+            } else {
+                bestIndividual= best;
+                bestCount = 0;
             }
 
+            if (best.getFitness() <= this.TARGET || bestCount == 50) break;
+
             if (log) console.log(
-                `Geração ${gen} | f: ${best.getFitness().toFixed(6)} | g: ${best.getGenes().join(", ")}`
+                `Geração ${gen} | f: ${best.getFitness().toFixed(6)} | g: ${""}` //best.getGenes().join(", ")
             );
         }
 
